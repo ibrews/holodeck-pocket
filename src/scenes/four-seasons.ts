@@ -12,6 +12,7 @@ import {
   Texture,
   DynamicTexture,
   Mesh,
+  SceneLoader,
 } from "@babylonjs/core";
 import type { SceneApi, SceneDefinition } from "../types";
 import { Controls } from "../controls";
@@ -218,6 +219,17 @@ const fourSeasonsDef: SceneDefinition = {
     markerMat.diffuseColor = brand.pink;
     markerMat.emissiveColor = brand.pink.scale(0.5);
     marker.material = markerMat;
+
+    // Async model load — Modern Hotel (CC-BY, Sketchfab / Vallarasu.Valla)
+    void SceneLoader.ImportMeshAsync("", "/models/four-seasons/", "venue.glb", scene).then(result => {
+      if (result.meshes.length > 0) {
+        const root = result.meshes[0];
+        root.position.set(0, 0, 0);
+        root.scaling.set(0.05, 0.05, 0.05);
+        label.isVisible = false;
+        marker.isVisible = false;
+      }
+    }).catch(err => console.warn("four-seasons: model load failed, keeping placeholder", err));
 
     // Boundary "skirt" so player can't walk into the void
     const skirt = MeshBuilder.CreateBox("skirt", { width: 80, depth: 80, height: 0.1 }, scene);

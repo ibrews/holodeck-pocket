@@ -10,6 +10,8 @@ import {
   StandardMaterial,
   PBRMaterial,
   Mesh,
+  SceneLoader,
+  AbstractMesh,
 } from "@babylonjs/core";
 import type { SceneApi, SceneDefinition } from "../types";
 import { Controls } from "../controls";
@@ -169,6 +171,28 @@ const dndDef: SceneDefinition = {
         gridMeshes.push(tok);
       }
     }
+
+    // Async model loads — Low Poly Tavern Interior + Game-Ready Dungeon Room (both CC-BY, Sketchfab)
+    const tavernPlaceholders: Mesh[] = [bar];
+    let tavernModelMeshes: AbstractMesh[] = [];
+    let dungeonModelMeshes: AbstractMesh[] = [];
+
+    void SceneLoader.ImportMeshAsync("", "/models/dnd/", "tavern.glb", scene).then(result => {
+      tavernModelMeshes = result.meshes;
+      const root = result.meshes[0];
+      root.position.set(0, 0.1, -8);
+      root.scaling.set(0.8, 0.8, 0.8);
+      tavernPlaceholders.forEach(m => { m.isVisible = false; });
+    }).catch(err => console.warn("dnd: tavern model load failed", err));
+
+    void SceneLoader.ImportMeshAsync("", "/models/dnd/", "dungeon.glb", scene).then(result => {
+      dungeonModelMeshes = result.meshes;
+      const root = result.meshes[0];
+      root.position.set(0, 0.1, 8);
+      root.scaling.set(0.8, 0.8, 0.8);
+    }).catch(err => console.warn("dnd: dungeon model load failed", err));
+
+    void tavernModelMeshes; void dungeonModelMeshes;
 
     // Brand placeholder marker (between rooms)
     const marker = MeshBuilder.CreateBox("marker", { width: 0.25, height: 1.4, depth: 0.25 }, scene);

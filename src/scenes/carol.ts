@@ -11,6 +11,7 @@ import {
   PBRMaterial,
   Mesh,
   GlowLayer,
+  SceneLoader,
 } from "@babylonjs/core";
 import type { SceneApi, SceneDefinition } from "../types";
 import { Controls } from "../controls";
@@ -216,6 +217,19 @@ const carolDef: SceneDefinition = {
         scene.fogColor = new Color3(0.07, 0.07, 0.1);
       }
     }
+
+    // Async model load — GothicBed_01 (CC0, Polyhaven) replaces the placeholder bed boxes
+    const bedPlaceholders = [bedFrame, mattress, pillow];
+    void SceneLoader.ImportMeshAsync("", "/models/carol/", "bedroom.glb", scene).then(result => {
+      if (result.meshes.length > 0) {
+        const root = result.meshes[0];
+        root.position.set(-2.5, 0.1, 2);
+        root.scaling.set(1.3, 1.3, 1.3);
+        bedPlaceholders.forEach(m => { m.isVisible = false; });
+      }
+    }).catch(err => {
+      console.warn("carol: model load failed, keeping placeholder", err);
+    });
 
     const controls = new Controls(scene, canvas, new Vector3(2, 1.7, 4), new Vector3(0, 1.5, 0));
 
