@@ -2,6 +2,29 @@
 
 Items that need human decision before this demo can ship to a live URL.
 
+## 5. Wiki initialization — needs one click (30 seconds)
+
+**Status:** ⚠️ action required
+
+GitHub wiki repos aren't created until the first page is saved via the web UI. Automated git push is blocked until then.
+
+**What to do:**
+1. Go to https://github.com/ibrews/holodeck-pocket/wiki
+2. Click **"Create the first page"**
+3. Leave title as **"Home"**, add any content, click **"Save Page"**
+
+After that, Session 08 can clone the wiki repo and push 6 fully-written pages that are already on disk at `~/git/holodeck-pocket-wiki/`:
+- `Home.md`, `Architecture.md`, `Adding-a-Scene.md`, `Models-and-Licenses.md`, `For-Talk-Presenters.md`, `FAQ.md`
+
+To push the wiki (run this once after clicking above):
+```bash
+cd ~/git && git clone https://github.com/ibrews/holodeck-pocket.wiki.git holodeck-pocket-wiki-push
+cp ~/git/holodeck-pocket-wiki/*.md ~/git/holodeck-pocket-wiki-push/
+cd ~/git/holodeck-pocket-wiki-push && git add . && git commit -m "feat(wiki): initial 6-page wiki" && git push
+```
+
+---
+
 ## 1. GitHub Pages is blocked by the plan on a private repo
 
 **Status:** ⚠️ blocker for the live demo URL
