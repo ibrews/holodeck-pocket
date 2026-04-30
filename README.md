@@ -99,7 +99,7 @@ Real geometry can be dropped under `public/models/<slug>/` and loaded with `Scen
 
 GitHub Actions (`.github/workflows/deploy.yml`) auto-deploys to GitHub Pages on every push to `main`. The Pages URL is `https://ibrews.github.io/holodeck-pocket/`.
 
-The repo is **private until after May 13, 2026** (post-NXT BLD). GitHub Pages on private repos requires a Pro/Team plan. If Pages on private isn't available on the `ibrews` plan, the fallback is Cloudflare Pages with a custom subdomain on `agilelens.com`.
+The repo is **public** (flipped from private on 2026-04-30 to enable GitHub Pages — the `ibrews` plan doesn't include Pages-on-private). The site is live at https://ibrews.github.io/holodeck-pocket/. If we ever need to flip private again before NXT BLD (May 13), Cloudflare Pages with a custom subdomain on `agilelens.com` is the documented fallback.
 
 ## Verification log
 

@@ -2,51 +2,26 @@
 
 Items that need human decision before this demo can ship to a live URL.
 
-## 5. Wiki initialization — needs one click (30 seconds)
+## ✅ RESOLVED — items 1 and 5
 
-**Status:** ⚠️ action required
-
-GitHub wiki repos aren't created until the first page is saved via the web UI. Automated git push is blocked until then.
-
-**What to do:**
-1. Go to https://github.com/ibrews/holodeck-pocket/wiki
-2. Click **"Create the first page"**
-3. Leave title as **"Home"**, add any content, click **"Save Page"**
-
-After that, Session 08 can clone the wiki repo and push 6 fully-written pages that are already on disk at `~/git/holodeck-pocket-wiki/`:
-- `Home.md`, `Architecture.md`, `Adding-a-Scene.md`, `Models-and-Licenses.md`, `For-Talk-Presenters.md`, `FAQ.md`
-
-To push the wiki (run this once after clicking above):
-```bash
-cd ~/git && git clone https://github.com/ibrews/holodeck-pocket.wiki.git holodeck-pocket-wiki-push
-cp ~/git/holodeck-pocket-wiki/*.md ~/git/holodeck-pocket-wiki-push/
-cd ~/git/holodeck-pocket-wiki-push && git add . && git commit -m "feat(wiki): initial 6-page wiki" && git push
-```
+- **#1 GitHub Pages blocker** — RESOLVED 2026-04-30. Repo flipped from private → public to enable Pages without paying for Pro. Live at https://ibrews.github.io/holodeck-pocket/. Decision logged in `_logs/03-irreversible-actions.md`. If re-private is wanted before NXT BLD (May 13), the documented fallback is Cloudflare Pages + custom subdomain on agilelens.com.
+- **#5 Wiki initialization** — RESOLVED 2026-04-30. Wiki was initialized via the web UI and the 6 pages (Home, Architecture, Adding-a-Scene, Models-and-Licenses, For-Talk-Presenters, FAQ) are live at https://github.com/ibrews/holodeck-pocket/wiki. There's a stale `Home.asciidoc` from the init click that should be deleted (manual or scripted).
 
 ---
 
-## 1. GitHub Pages is blocked by the plan on a private repo
+## 6. CC-BY visible attribution (legal exposure on a public site)
 
-**Status:** ⚠️ blocker for the live demo URL
+**Status:** ⚠️ open
 
-The repo is private (per the safeguards in the briefing — must stay private until after May 13). Attempting to enable Pages via the API returns:
+`LICENSES.md` documents the 3 CC-BY 4.0 model authors (`i.we.d`, `anandyuvraj409`, `Vallarasu.Valla`). But CC-BY 4.0 §3.a.1.A requires attribution be presented "in any reasonable manner based on the medium." For a 3D model rendered in a web app, "reasonable" generally means a credits surface visible to end users — not just a separate file in the repo.
 
-> Your current plan does not support GitHub Pages for this repository. (HTTP 422)
+The deployed page currently has no attribution UI. End users walking through the dungeon scene never see `anandyuvraj409`.
 
-The `ibrews` user account does not have GitHub Pro (which is required for Pages on private repos).
+**Smallest fix:** add a `Credits` button in the HUD that opens a dialog listing each model + author + license + Sketchfab link. Or a `<footer>` with the same. ~30 minutes work.
 
-The CI workflow at `.github/workflows/deploy.yml` is in place and will auto-deploy on push to `main`, **as soon as Pages is enabled**.
+## 7. Stale wiki Models-and-Licenses page
 
-### Options for human decision
-
-| Option | Pros | Cons |
-|--------|------|------|
-| **A. Upgrade `ibrews` to GitHub Pro** ($4/mo) | Repo stays private, Pages works, no architectural change | Recurring cost |
-| **B. Flip repo public after FMX (post-May 7)** | Free, simplest path | Repo public during the May 13 NXT BLD window — competitive surprise risk |
-| **C. Cloudflare Pages + custom subdomain** | Free, repo stays private | Needs CF account + token setup; no CLI present locally |
-| **D. Static upload to a CDN of choice** | Flexible | Manual; loses CI auto-deploy |
-
-The briefing's primary instruction was "Default to GitHub Pages" with Cloudflare Pages as the simpler-when-needed fallback. Recommend **A** if recurring cost is acceptable, otherwise **C**.
+The wiki page at `Models-and-Licenses.md` says `Author: see Sketchfab page` for all three CC-BY models instead of naming the actual handles. Fill in `i.we.d`, `anandyuvraj409`, `Vallarasu.Valla`, `Kirill Sannikov` to match `LICENSES.md`.
 
 ## 2. Real venue / set models
 

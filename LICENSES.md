@@ -8,7 +8,7 @@ All geometry files under `public/models/` are sourced from Creative Commons-lice
 
 - **Model:** GothicBed_01
 - **Source:** https://polyhaven.com/a/GothicBed_01
-- **Author:** Polyhaven contributors
+- **Author:** Kirill Sannikov (via Polyhaven)
 - **License:** CC0 1.0 Universal (public domain — no attribution required)
 - **Modifications:** Exported at 1k texture quality; GLTF + separate textures converted to a single self-contained GLB via gltf-pipeline v4
 
