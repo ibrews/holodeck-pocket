@@ -1,0 +1,246 @@
+:root {
+  --brand-purple: #3500A7;
+  --brand-pink: #FE00B5;
+  --ink: #0d0a1e;
+  --ink-soft: rgba(13, 10, 30, 0.78);
+  --paper: #f5f3ff;
+  --hud-z: 10;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  background: #000;
+  color: var(--paper);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+#renderCanvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  outline: none;
+  touch-action: none;
+}
+
+#hud {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: var(--hud-z);
+}
+
+#topbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px max(12px, env(safe-area-inset-right)) 12px max(12px, env(safe-area-inset-left));
+  padding-top: max(12px, env(safe-area-inset-top));
+  background: linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0));
+  pointer-events: auto;
+  flex-wrap: wrap;
+}
+
+#brand {
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  color: var(--paper);
+  text-shadow: 0 1px 0 rgba(0,0,0,0.4);
+}
+#brand .dot { color: var(--brand-pink); padding: 0 4px; }
+
+#scene-pills {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+#scene-pills button {
+  appearance: none;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.08);
+  color: var(--paper);
+  padding: 6px 12px;
+  font-size: 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+}
+#scene-pills button[aria-pressed="true"] {
+  background: var(--brand-pink);
+  border-color: var(--brand-pink);
+  color: #fff;
+}
+
+#xr-button {
+  margin-left: auto;
+  appearance: none;
+  border: 1px solid var(--brand-pink);
+  background: var(--brand-pink);
+  color: #fff;
+  font-weight: 700;
+  padding: 7px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+}
+#xr-button:disabled { opacity: 0.5; cursor: default; }
+
+#options-panel {
+  position: absolute;
+  right: 12px;
+  top: 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 12px;
+  background: var(--ink-soft);
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.1);
+  pointer-events: auto;
+  max-width: 220px;
+  font-size: 12px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+#options-panel:empty { display: none; }
+#options-panel h3 {
+  margin: 0 0 4px 0;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(245, 243, 255, 0.6);
+  font-weight: 600;
+}
+#options-panel .opt {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+#options-panel label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(245,243,255,0.7);
+}
+#options-panel select {
+  appearance: none;
+  -webkit-appearance: none;
+  background: rgba(255,255,255,0.08);
+  color: var(--paper);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 13px;
+  font-family: inherit;
+}
+
+#placeholder-note {
+  position: absolute;
+  left: 12px;
+  bottom: max(12px, env(safe-area-inset-bottom));
+  background: var(--ink-soft);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  border-left: 3px solid var(--brand-pink);
+  pointer-events: auto;
+  max-width: 320px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+#placeholder-note strong { color: var(--brand-pink); }
+
+#hint {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: max(80px, calc(env(safe-area-inset-bottom) + 80px));
+  background: rgba(0,0,0,0.55);
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+#hint.show { opacity: 1; }
+
+#touch-controls {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+#joystick {
+  position: absolute;
+  left: max(20px, env(safe-area-inset-left));
+  bottom: max(28px, env(safe-area-inset-bottom));
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.2);
+  pointer-events: auto;
+  touch-action: none;
+}
+#joystick-knob {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 50px;
+  height: 50px;
+  margin-left: -25px;
+  margin-top: -25px;
+  border-radius: 50%;
+  background: rgba(254, 0, 181, 0.85);
+  pointer-events: none;
+}
+#look-pad {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 60%;
+  height: 100%;
+  pointer-events: auto;
+  touch-action: none;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 32px;
+  font-size: 10px;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.boot-msg {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  font-size: 14px;
+  padding: 24px;
+}
+
+@media (max-width: 480px) {
+  #brand { font-size: 12px; }
+  #scene-pills button { padding: 5px 10px; font-size: 11px; }
+}
