@@ -1,0 +1,8 @@
+◆  Linting holodeck-pocket-promo/index.html
+
+  ⚠ composition_file_too_large: This HTML composition file has 651 lines. Agents produce better results when large scenes are split into smaller sub-compositions.
+    Fix: Split coherent scenes or layers into separate .html files under compositions/, then mount them from the parent with data-composition-src so each file stays small enough to inspect, revise, and validate independently.
+  ⚠ timeline_track_too_dense: Track 1 has 5 timed elements in this HTML file. Agents produce better timelines when dense tracks are split into smaller sub-compositions.
+    Fix: Move coherent scene groups into separate .html files under compositions/ and mount them from the parent with data-composition-src so the timeline stays easier to inspect, revise, and validate.
+
+◇  0 error(s), 2 warning(s)
