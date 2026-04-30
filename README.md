@@ -10,6 +10,34 @@ Built with **Babylon.js** + **TypeScript** + **Vite**, deployed to GitHub Pages.
 
 QR code: see [`qr.png`](qr.png) and [`qr.svg`](qr.svg).
 
+## Screenshots
+
+### Four Seasons Lake Austin
+
+| Desktop — Golden hour | Desktop — Night reception |
+|---|---|
+| ![Four Seasons entry](public/screenshots/desktop-four-seasons-entry.png) | ![Four Seasons night](public/screenshots/desktop-four-seasons-night.png) |
+
+### A Christmas Carol — Stave 1
+
+| Desktop — Gas-lamp | Desktop — Ghost-light |
+|---|---|
+| ![Carol entry](public/screenshots/desktop-carol-entry.png) | ![Carol ghost light](public/screenshots/desktop-carol-ghost.png) |
+
+### Stage Presence — D&D Encounter
+
+| Desktop — Tavern | Desktop — Combat tokens visible |
+|---|---|
+| ![D&D entry](public/screenshots/desktop-dnd-entry.png) | ![D&D tokens](public/screenshots/desktop-dnd-tokens.png) |
+
+### Phone view (390×844)
+
+| Four Seasons | Carol | D&D |
+|---|---|---|
+| ![Phone four-seasons](public/screenshots/phone-four-seasons-entry.png) | ![Phone carol](public/screenshots/phone-carol-entry.png) | ![Phone dnd](public/screenshots/phone-dnd-entry.png) |
+
+---
+
 ## Scenes
 
 | Slug | URL fragment | Anchor for |
@@ -79,4 +107,6 @@ The repo is **private until after May 13, 2026** (post-NXT BLD). GitHub Pages on
 
 ## License
 
-Private — internal AgileLens / BPI. Do not redistribute.
+Source code: private — internal AgileLens / BPI. Do not redistribute.
+
+All third-party 3D models — see [LICENSES.md](./LICENSES.md) for per-model attribution.
