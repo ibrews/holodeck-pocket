@@ -40,10 +40,68 @@
       </div>
     </div>
 
+    <!-- Credits button -->
+    <button id="credits-btn" type="button" aria-label="View model credits" aria-haspopup="dialog">Credits</button>
+
+    <!-- Credits modal -->
+    <div id="credits-modal" role="dialog" aria-modal="true" aria-labelledby="credits-title" hidden>
+      <div id="credits-dialog">
+        <button id="credits-close" type="button" aria-label="Close credits">✕</button>
+        <h2 id="credits-title">3D Model Credits</h2>
+        <ul>
+          <li>
+            <strong>Low Poly Tavern Interior</strong><br>
+            by <a href="https://sketchfab.com/3d-models/low-poly-tavern-interior-5a71f5639df14b7bb6a67cab93d22079" target="_blank" rel="noopener noreferrer">i.we.d</a>
+            on Sketchfab &mdash; <span class="license">CC BY 4.0</span>
+          </li>
+          <li>
+            <strong>Game-Ready Underground Dungeon Room</strong><br>
+            by <a href="https://sketchfab.com/3d-models/game-ready-underground-dungeon-room-25e82c96b345415ebacddcae989601db" target="_blank" rel="noopener noreferrer">anandyuvraj409</a>
+            on Sketchfab &mdash; <span class="license">CC BY 4.0</span>
+          </li>
+          <li>
+            <strong>Modern Hotel</strong><br>
+            by <a href="https://sketchfab.com/3d-models/modern-hotel-91c3681e41d645ca959179f6a563c084" target="_blank" rel="noopener noreferrer">Vallarasu.Valla</a>
+            on Sketchfab &mdash; <span class="license">CC BY 4.0</span>
+          </li>
+        </ul>
+        <p class="credits-footer">
+          <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>
+          — attribution required under Creative Commons.
+        </p>
+      </div>
+    </div>
+
     <noscript>
       <div class="boot-msg">This demo needs JavaScript and WebGL.</div>
     </noscript>
 
     <script type="module" src="/src/main.ts"></script>
+    <script>
+      (function () {
+        var btn = document.getElementById('credits-btn');
+        var modal = document.getElementById('credits-modal');
+        var closeBtn = document.getElementById('credits-close');
+
+        function openModal() {
+          modal.hidden = false;
+          modal.removeAttribute('hidden');
+          closeBtn.focus();
+        }
+        function closeModal() {
+          modal.hidden = true;
+          btn.focus();
+        }
+
+        btn.addEventListener('click', openModal);
+        closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', function (e) {
+          if (e.target === modal) closeModal();
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape' && !modal.hidden) closeModal();
+        });
+      })();
+    </script>
   </body>
 </html>

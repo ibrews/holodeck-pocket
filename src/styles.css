@@ -244,3 +244,130 @@ html, body {
   #brand { font-size: 12px; }
   #scene-pills button { padding: 5px 10px; font-size: 11px; }
 }
+
+/* ── Credits button ───────────────────────────────────────────── */
+#credits-btn {
+  position: fixed;
+  bottom: max(12px, env(safe-area-inset-bottom));
+  right: max(12px, env(safe-area-inset-right));
+  z-index: var(--hud-z);
+  appearance: none;
+  background: rgba(13, 10, 30, 0.70);
+  color: rgba(245, 243, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 5px 10px;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  cursor: pointer;
+  font-family: inherit;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: color 0.15s, border-color 0.15s;
+}
+#credits-btn:hover,
+#credits-btn:focus-visible {
+  color: var(--paper);
+  border-color: rgba(255, 255, 255, 0.4);
+  outline: none;
+}
+
+/* ── Credits modal overlay ────────────────────────────────────── */
+#credits-modal {
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--hud-z) + 10);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  padding: 24px;
+}
+#credits-modal[hidden] { display: none; }
+
+#credits-dialog {
+  position: relative;
+  background: rgba(13, 10, 30, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: 28px 28px 20px;
+  max-width: 420px;
+  width: 100%;
+  color: var(--paper);
+  font-size: 13px;
+  line-height: 1.6;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.7);
+}
+
+#credits-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  appearance: none;
+  background: none;
+  border: none;
+  color: rgba(245, 243, 255, 0.5);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 6px;
+  line-height: 1;
+  font-family: inherit;
+  transition: color 0.15s;
+}
+#credits-close:hover,
+#credits-close:focus-visible {
+  color: var(--paper);
+  outline: none;
+}
+
+#credits-title {
+  margin: 0 0 16px 0;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brand-pink);
+}
+
+#credits-dialog ul {
+  list-style: none;
+  margin: 0 0 16px 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+#credits-dialog li {
+  border-left: 2px solid var(--brand-purple);
+  padding-left: 12px;
+}
+
+#credits-dialog a {
+  color: var(--brand-pink);
+  text-decoration: none;
+}
+#credits-dialog a:hover,
+#credits-dialog a:focus-visible {
+  text-decoration: underline;
+  outline: none;
+}
+
+.license {
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba(245, 243, 255, 0.55);
+}
+
+.credits-footer {
+  margin: 0;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 11px;
+  color: rgba(245, 243, 255, 0.45);
+}
