@@ -2,26 +2,14 @@
 
 Items that need human decision before this demo can ship to a live URL.
 
-## ✅ RESOLVED — items 1 and 5
+## ✅ RESOLVED — items 1, 5, 6, and 7
 
 - **#1 GitHub Pages blocker** — RESOLVED 2026-04-30. Repo flipped from private → public to enable Pages without paying for Pro. Live at https://ibrews.github.io/holodeck-pocket/. Decision logged in `_logs/03-irreversible-actions.md`. If re-private is wanted before NXT BLD (May 13), the documented fallback is Cloudflare Pages + custom subdomain on agilelens.com.
 - **#5 Wiki initialization** — RESOLVED 2026-04-30. Wiki was initialized via the web UI and the 6 pages (Home, Architecture, Adding-a-Scene, Models-and-Licenses, For-Talk-Presenters, FAQ) are live at https://github.com/ibrews/holodeck-pocket/wiki. There's a stale `Home.asciidoc` from the init click that should be deleted (manual or scripted).
+- **#6 CC-BY visible attribution** — RESOLVED 2026-05-20. Credits modal added to `index.html` and `styles.css` with all three CC-BY 4.0 models attributed (`i.we.d`, `anandyuvraj409`, `Vallarasu.Valla`) with Sketchfab links. CC0 bedroom (Kirill Sannikov/Polyhaven) correctly excluded. A Credits button in the HUD opens the dialog — visible to all end users.
+- **#7 Stale wiki Models-and-Licenses page** — RESOLVED 2026-05-20. Wiki page updated with actual Sketchfab handles: `i.we.d`, `anandyuvraj409`, `Vallarasu.Valla` for CC-BY 4.0 models; `Kirill Sannikov` (Polyhaven) for the CC0 bedroom asset — all now match `LICENSES.md`.
 
 ---
-
-## 6. CC-BY visible attribution (legal exposure on a public site)
-
-**Status:** ⚠️ open
-
-`LICENSES.md` documents the 3 CC-BY 4.0 model authors (`i.we.d`, `anandyuvraj409`, `Vallarasu.Valla`). But CC-BY 4.0 §3.a.1.A requires attribution be presented "in any reasonable manner based on the medium." For a 3D model rendered in a web app, "reasonable" generally means a credits surface visible to end users — not just a separate file in the repo.
-
-The deployed page currently has no attribution UI. End users walking through the dungeon scene never see `anandyuvraj409`.
-
-**Smallest fix:** add a `Credits` button in the HUD that opens a dialog listing each model + author + license + Sketchfab link. Or a `<footer>` with the same. ~30 minutes work.
-
-## 7. Stale wiki Models-and-Licenses page
-
-The wiki page at `Models-and-Licenses.md` says `Author: see Sketchfab page` for all three CC-BY models instead of naming the actual handles. Fill in `i.we.d`, `anandyuvraj409`, `Vallarasu.Valla`, `Kirill Sannikov` to match `LICENSES.md`.
 
 ## 2. Real venue / set models
 
