@@ -1,0 +1,651 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Holodeck-in-a-Pocket — promo</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #0d0a1e;
+        color: #f5f3ff;
+        font-family: -apple-system, system-ui, "Helvetica Neue", Arial, sans-serif;
+        font-feature-settings: "ss01", "ss02";
+      }
+
+      #root {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #0d0a1e;
+      }
+
+      .scene {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+
+      /* ---------- Ambient gradient wash (always-on parent layer) ---------- */
+      .bg-wash {
+        position: absolute;
+        inset: -4%;
+        background:
+          radial-gradient(ellipse at 30% 30%, rgba(254, 0, 181, 0.18), transparent 60%),
+          radial-gradient(ellipse at 72% 78%, rgba(53, 0, 167, 0.28), transparent 62%);
+        pointer-events: none;
+      }
+
+      .gradient-bar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 6px;
+        background: linear-gradient(90deg, #3500a7 0%, #fe00b5 100%);
+      }
+
+      /* ---------- Beat 1 — Title ---------- */
+      .beat-title .hero-bg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.32;
+        filter: blur(2px) saturate(1.05);
+      }
+      .beat-title .title-card {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        gap: 32px;
+        padding: 0 80px;
+      }
+      .beat-title .wordmark {
+        font-size: 24px;
+        font-weight: 600;
+        letter-spacing: 0.32em;
+        color: #f5f3ff;
+        opacity: 0.86;
+      }
+      .beat-title .title-headline {
+        font-size: 168px;
+        line-height: 0.94;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        color: #f5f3ff;
+        text-shadow: 0 0 60px rgba(254, 0, 181, 0.22);
+      }
+      .beat-title .title-headline .tdash {
+        color: #fe00b5;
+      }
+      .beat-title .title-sub {
+        font-size: 30px;
+        font-weight: 400;
+        letter-spacing: 0.2em;
+        color: rgba(245, 243, 255, 0.78);
+      }
+      .beat-title .title-sub b {
+        color: #fe00b5;
+        font-weight: 600;
+      }
+
+      /* ---------- Beat 2 — Scan & arrive ---------- */
+      .beat-scan {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .beat-scan .scan-frame {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .beat-scan .qr-card {
+        position: relative;
+        width: 460px;
+        height: 580px;
+        background: #151028;
+        border: 1px solid rgba(254, 0, 181, 0.4);
+        border-radius: 36px;
+        padding: 56px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 36px;
+        box-shadow: 0 30px 90px rgba(0, 0, 0, 0.55);
+      }
+      .beat-scan .qr-card img {
+        width: 320px;
+        height: 320px;
+        background: #f5f3ff;
+        padding: 16px;
+        border-radius: 18px;
+      }
+      .beat-scan .qr-card .qr-glow {
+        position: absolute;
+        inset: -40px;
+        border-radius: 56px;
+        background: radial-gradient(circle, rgba(254, 0, 181, 0.35), transparent 65%);
+        pointer-events: none;
+      }
+      .beat-scan .qr-card .qr-cap {
+        font-size: 22px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        color: #f5f3ff;
+        text-align: center;
+      }
+      .beat-scan .fs-arrive {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .beat-scan .fs-arrive .fs-arrive-inner {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .beat-scan .fs-arrive img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .beat-scan .cap {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 88px;
+        text-align: center;
+        font-size: 42px;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        color: #f5f3ff;
+        text-shadow: 0 4px 20px rgba(13, 10, 30, 0.85);
+      }
+      .beat-scan .cap b {
+        color: #fe00b5;
+        font-weight: 700;
+      }
+
+      /* ---------- Beat 3 — Toggle ---------- */
+      .beat-toggle .fs-shot {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .beat-toggle .chip-spot {
+        position: absolute;
+        top: 60px;
+        right: 60px;
+        width: 260px;
+        height: 200px;
+        border: 2px solid rgba(254, 0, 181, 0.85);
+        border-radius: 20px;
+        box-shadow:
+          0 0 0 6px rgba(254, 0, 181, 0.18),
+          0 0 60px 6px rgba(254, 0, 181, 0.32);
+        pointer-events: none;
+        z-index: 5;
+      }
+      .beat-toggle .cap {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 96px;
+        text-align: center;
+        font-size: 44px;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        color: #f5f3ff;
+        text-shadow: 0 4px 22px rgba(13, 10, 30, 0.85);
+      }
+      .beat-toggle .cap b {
+        color: #fe00b5;
+        font-weight: 700;
+      }
+      .beat-toggle .flash-bar {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(225deg, #3500a7 0%, #fe00b5 100%);
+        opacity: 0;
+        z-index: 8;
+        pointer-events: none;
+      }
+
+      /* ---------- Beat 4 — Three rooms, one engine ---------- */
+      .beat-rooms .room-shot {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .beat-rooms .room-label {
+        position: absolute;
+        top: 56px;
+        left: 56px;
+        background: rgba(13, 10, 30, 0.88);
+        border: 1px solid rgba(254, 0, 181, 0.34);
+        border-radius: 999px;
+        padding: 10px 22px;
+        font-size: 18px;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        color: #f5f3ff;
+        z-index: 5;
+      }
+      .beat-rooms .cap {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 96px;
+        text-align: center;
+        font-size: 56px;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        color: #f5f3ff;
+        text-shadow: 0 4px 28px rgba(13, 10, 30, 0.92);
+        z-index: 6;
+      }
+      .beat-rooms .cap b {
+        color: #fe00b5;
+        font-weight: 800;
+      }
+      .beat-rooms .flash-bar {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(225deg, #3500a7 0%, #fe00b5 100%);
+        opacity: 0;
+        z-index: 8;
+        pointer-events: none;
+      }
+
+      /* ---------- Beat 5 — End card ---------- */
+      .beat-end .endcard-card {
+        position: relative;
+        z-index: 3;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 32px;
+        padding: 56px 80px;
+      }
+      .beat-end .endcard-tag {
+        font-size: 22px;
+        font-weight: 600;
+        letter-spacing: 0.32em;
+        color: #f5f3ff;
+        opacity: 0.78;
+      }
+      .beat-end .endcard-tag b {
+        color: #fe00b5;
+        font-weight: 700;
+      }
+      .beat-end .endcard-qr {
+        position: relative;
+        width: 380px;
+        height: 380px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f5f3ff;
+        border-radius: 28px;
+        padding: 22px;
+        box-shadow: 0 30px 110px rgba(254, 0, 181, 0.28);
+      }
+      .beat-end .endcard-qr img {
+        width: 100%;
+        height: 100%;
+      }
+      .beat-end .endcard-qr .qr-aura {
+        position: absolute;
+        inset: -56px;
+        border-radius: 56px;
+        background: radial-gradient(circle, rgba(254, 0, 181, 0.38), transparent 65%);
+        pointer-events: none;
+        z-index: -1;
+      }
+      .beat-end .endcard-url {
+        font-size: 56px;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        color: #f5f3ff;
+      }
+      .beat-end .endcard-url .slash {
+        color: #fe00b5;
+      }
+      .beat-end .endcard-cta {
+        font-size: 22px;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        color: #f5f3ff;
+        background: linear-gradient(225deg, #3500a7 0%, #fe00b5 100%);
+        padding: 14px 32px;
+        border-radius: 999px;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="22"
+      data-width="1920"
+      data-height="1080"
+    >
+      <!-- ============ Beat 1 — Title (0.0 → 4.5s) ============ -->
+      <div id="scene-1-title" class="scene clip beat-title" data-start="0" data-duration="4.5" data-track-index="1">
+        <div class="bg-wash"></div>
+        <div class="gradient-bar"></div>
+        <img class="hero-bg" src="assets/hero-fs-golden.png" alt="" />
+        <div class="title-card">
+          <div class="wordmark">HOLODECK · POCKET</div>
+          <h1 class="title-headline">
+            HOLODECK<br /><span class="tdash">·</span> IN-A-POCKET
+          </h1>
+          <div class="title-sub">
+            <b>Scan.</b> &nbsp;Walk.&nbsp; Toggle.&nbsp; Share.
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ Beat 2 — Scan & arrive (4.5 → 9.5s) ============ -->
+      <div id="scene-2-scan" class="scene clip beat-scan" data-start="4.5" data-duration="5.0" data-track-index="1">
+        <div class="bg-wash"></div>
+        <div class="gradient-bar"></div>
+
+        <!-- arrive layer (under the QR card) -->
+        <div class="fs-arrive">
+          <div class="fs-arrive-inner">
+            <img src="assets/fs-arrive-golden.png" alt="" />
+          </div>
+        </div>
+
+        <!-- QR card (foreground) -->
+        <div class="qr-card">
+          <div class="qr-glow"></div>
+          <img src="assets/qr.png" alt="QR code" />
+          <div class="qr-cap">ibrews.github.io / holodeck-pocket</div>
+        </div>
+
+        <div class="cap cap-scan"><b>Point your phone at the QR.</b></div>
+        <div class="cap cap-walk">Walk through the venue.</div>
+      </div>
+
+      <!-- ============ Beat 3 — Toggle (9.5 → 14.5s) ============ -->
+      <div id="scene-3-toggle" class="scene clip beat-toggle" data-start="9.5" data-duration="5.0" data-track-index="1">
+        <div class="bg-wash"></div>
+        <div class="gradient-bar"></div>
+
+        <img class="fs-shot fs-A" src="assets/fs-golden-rounds.png" alt="" />
+        <img class="fs-shot fs-B" src="assets/fs-night-theater.png" alt="" />
+        <img class="fs-shot fs-C" src="assets/fs-noon-mingle.png" alt="" />
+
+        <!-- Highlight ring to draw the eye to the live site's own DESIGN OPTIONS panel
+             (top-right of the captured screenshots). My overlay chip was duplicating the
+             baked-in panel — instead, halo the real one. -->
+        <div class="chip-spot"></div>
+
+        <div class="flash-bar"></div>
+        <div class="cap cap-toggle"><b>Toggle</b> the design options.</div>
+      </div>
+
+      <!-- ============ Beat 4 — Three rooms, one engine (14.5 → 19.0s) ============ -->
+      <div id="scene-4-rooms" class="scene clip beat-rooms" data-start="14.5" data-duration="4.5" data-track-index="1">
+        <div class="bg-wash"></div>
+        <div class="gradient-bar"></div>
+
+        <img class="room-shot room-A" src="assets/carol-gas.png" alt="" />
+        <img class="room-shot room-B" src="assets/carol-ghost.png" alt="" />
+        <img class="room-shot room-C" src="assets/dnd-dungeon-tokens.png" alt="" />
+
+        <div class="room-label room-label-A">A Christmas Carol &middot; Stave 1</div>
+        <div class="room-label room-label-B">A Christmas Carol &middot; Ghost light</div>
+        <div class="room-label room-label-C">Stage Presence &middot; D&amp;D Encounter</div>
+
+        <div class="flash-bar"></div>
+        <div class="cap cap-rooms">Three rooms. <b>One engine.</b></div>
+      </div>
+
+      <!-- ============ Beat 5 — End card (19.0 → 22.0s) ============ -->
+      <div id="scene-5-end" class="scene clip beat-end" data-start="19.0" data-duration="3.0" data-track-index="1">
+        <div class="bg-wash"></div>
+        <div class="gradient-bar"></div>
+
+        <div class="endcard-card">
+          <div class="endcard-tag"><b>Scan.</b>&nbsp; Walk.&nbsp; Toggle.&nbsp; Share.</div>
+          <div class="endcard-qr">
+            <div class="qr-aura"></div>
+            <img src="assets/qr-endcard.png" alt="QR code" />
+          </div>
+          <div class="endcard-url">
+            ibrews.github.io<span class="slash">/</span>holodeck-pocket
+          </div>
+          <div class="endcard-cta">Live at NXT BLD &middot; FMX 2026</div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // ---------- Beat 1 — Title (0.0 → 4.5s) ----------
+      // Framework manages .clip visibility — we do NOT animate visibility on .clip elements.
+      // Parent owns y/opacity; child owns scale (rule #2).
+      const t1 = 0;
+
+      // Hero background: parent owns opacity (entrance), child .hero-bg-inner could own scale,
+      // but here .hero-bg has its own opacity tween + a scale tween that runs AFTER opacity
+      // is fully resolved — no stacking risk because the second tween starts at t+0.5, by
+      // which the first is finished.
+      tl.fromTo(".beat-title .hero-bg",
+        { opacity: 0 }, { opacity: 0.32, duration: 0.8, ease: "power2.out" },
+        t1);
+      tl.to(".beat-title .hero-bg",
+        { scale: 1.06, duration: 4.0, ease: "sine.out" },
+        t1 + 0.5);
+
+      tl.fromTo(".beat-title .title-card",
+        { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" },
+        t1 + 0.25);
+
+      tl.fromTo(".beat-title .title-headline",
+        { scale: 1 }, { scale: 1.04, duration: 4.4, ease: "sine.inOut" },
+        t1);
+
+      tl.fromTo(".beat-title .bg-wash",
+        { x: "-2%", y: "-2%" }, { x: "2%", y: "2%", duration: 4.4, ease: "sine.inOut" },
+        t1);
+
+      // ---------- Beat 2 — Scan & arrive (4.5 → 9.5s) ----------
+      const t2 = 4.5;
+
+      // Phone-QR card enters
+      tl.fromTo(".beat-scan .qr-card",
+        { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.55, ease: "power3.out", overwrite: "auto" },
+        t2);
+      tl.fromTo(".beat-scan .cap-scan",
+        { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out", overwrite: "auto" },
+        t2 + 0.1);
+
+      // QR breath — child <img> handles the scale, parent owns opacity (rule #2).
+      tl.fromTo(".beat-scan .qr-card img",
+        { scale: 0.96 }, { scale: 1.04, duration: 0.5, ease: "sine.inOut", repeat: 3, yoyo: true },
+        t2);
+
+      // QR card exits at t2+2.1 (6.6s absolute)
+      tl.to(".beat-scan .qr-card",
+        { opacity: 0, y: -16, duration: 0.5, ease: "power2.in", overwrite: "auto" },
+        t2 + 2.1);
+      tl.to(".beat-scan .cap-scan",
+        { opacity: 0, y: -8, duration: 0.4, ease: "power2.in", overwrite: "auto" },
+        t2 + 2.0);
+
+      // FS-arrive layer enters at t2+2.5 (7.0s absolute). Initial state via tl.set so
+      // the layer is hidden before this beat starts.
+      tl.set(".beat-scan .fs-arrive",       { opacity: 0 }, t2);
+      tl.set(".beat-scan .fs-arrive-inner", { scale: 1.06 }, t2);
+
+      tl.fromTo(".beat-scan .fs-arrive",
+        { opacity: 0 }, { opacity: 1, duration: 0.55, ease: "power2.out" },
+        t2 + 2.5);
+      tl.fromTo(".beat-scan .fs-arrive-inner",
+        { scale: 1.06 }, { scale: 1.0, duration: 2.5, ease: "sine.out" },
+        t2 + 2.5);
+
+      tl.fromTo(".beat-scan .cap-walk",
+        { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
+        t2 + 2.7);
+
+      // ---------- Beat 3 — Toggle (9.5 → 14.5s) ----------
+      const t3 = 9.5;
+
+      // Image cuts: A on at start, B at +1.5, C at +3.0; only one visible at a time.
+      tl.set(".beat-toggle .fs-A", { opacity: 1, scale: 1 }, t3);
+      tl.set(".beat-toggle .fs-B", { opacity: 0, scale: 1 }, t3);
+      tl.set(".beat-toggle .fs-C", { opacity: 0, scale: 1 }, t3);
+
+      // Child Ken Burns on each image (parent already owns opacity).
+      tl.fromTo(".beat-toggle .fs-A",
+        { scale: 1.0 }, { scale: 1.04, duration: 1.5, ease: "sine.out" }, t3);
+      tl.fromTo(".beat-toggle .fs-B",
+        { scale: 1.0 }, { scale: 1.04, duration: 1.5, ease: "sine.out" }, t3 + 1.5);
+      tl.fromTo(".beat-toggle .fs-C",
+        { scale: 1.0 }, { scale: 1.04, duration: 2.0, ease: "sine.out" }, t3 + 3.0);
+
+      // Cuts at +1.5 and +3.0
+      tl.set(".beat-toggle .fs-A", { opacity: 0 }, t3 + 1.5);
+      tl.set(".beat-toggle .fs-B", { opacity: 1 }, t3 + 1.5);
+      tl.set(".beat-toggle .fs-B", { opacity: 0 }, t3 + 3.0);
+      tl.set(".beat-toggle .fs-C", { opacity: 1 }, t3 + 3.0);
+
+      // Flash washes (200ms each)
+      tl.set(".beat-toggle .flash-bar", { opacity: 0 }, t3);
+      tl.fromTo(".beat-toggle .flash-bar",
+        { opacity: 0 }, { opacity: 0.85, duration: 0.1, ease: "power2.out", overwrite: "auto" }, t3 + 1.45);
+      tl.to(".beat-toggle .flash-bar",
+        { opacity: 0, duration: 0.1, ease: "power2.in", overwrite: "auto" }, t3 + 1.55);
+      tl.fromTo(".beat-toggle .flash-bar",
+        { opacity: 0 }, { opacity: 0.85, duration: 0.1, ease: "power2.out", overwrite: "auto" }, t3 + 2.95);
+      tl.to(".beat-toggle .flash-bar",
+        { opacity: 0, duration: 0.1, ease: "power2.in", overwrite: "auto" }, t3 + 3.05);
+
+      // Halo ring around the live site's own DESIGN OPTIONS panel — pulses to draw the eye.
+      tl.fromTo(".beat-toggle .chip-spot",
+        { opacity: 0, scale: 0.92 },
+        { opacity: 1, scale: 1.0, duration: 0.5, ease: "power3.out", overwrite: "auto" },
+        t3 + 0.2);
+      tl.fromTo(".beat-toggle .chip-spot",
+        { scale: 1.0 }, { scale: 1.04, duration: 0.5, ease: "sine.inOut", repeat: 7, yoyo: true },
+        t3 + 0.7);
+
+      // Caption
+      tl.fromTo(".beat-toggle .cap-toggle",
+        { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out", overwrite: "auto" },
+        t3 + 0.4);
+      tl.to(".beat-toggle .cap-toggle",
+        { opacity: 0, duration: 0.4, ease: "power2.in", overwrite: "auto" }, t3 + 4.6);
+
+      // ---------- Beat 4 — Three rooms, one engine (14.5 → 19.0s) ----------
+      const t4 = 14.5;
+
+      tl.set(".beat-rooms .room-A", { opacity: 1, scale: 1.0 }, t4);
+      tl.set(".beat-rooms .room-B", { opacity: 0, scale: 1.0 }, t4);
+      tl.set(".beat-rooms .room-C", { opacity: 0, scale: 1.0 }, t4);
+
+      tl.fromTo(".beat-rooms .room-A",
+        { scale: 1.0 }, { scale: 1.05, duration: 1.5, ease: "sine.out" }, t4);
+      tl.fromTo(".beat-rooms .room-B",
+        { scale: 1.0 }, { scale: 1.05, duration: 1.5, ease: "sine.out" }, t4 + 1.5);
+      tl.fromTo(".beat-rooms .room-C",
+        { scale: 1.0 }, { scale: 1.05, duration: 1.5, ease: "sine.out" }, t4 + 3.0);
+
+      tl.set(".beat-rooms .room-A", { opacity: 0 }, t4 + 1.5);
+      tl.set(".beat-rooms .room-B", { opacity: 1 }, t4 + 1.5);
+      tl.set(".beat-rooms .room-B", { opacity: 0 }, t4 + 3.0);
+      tl.set(".beat-rooms .room-C", { opacity: 1 }, t4 + 3.0);
+
+      // Flash cuts
+      tl.set(".beat-rooms .flash-bar", { opacity: 0 }, t4);
+      tl.fromTo(".beat-rooms .flash-bar",
+        { opacity: 0 }, { opacity: 0.78, duration: 0.09, ease: "power2.out", overwrite: "auto" }, t4 + 1.45);
+      tl.to(".beat-rooms .flash-bar",
+        { opacity: 0, duration: 0.09, ease: "power2.in", overwrite: "auto" }, t4 + 1.54);
+      tl.fromTo(".beat-rooms .flash-bar",
+        { opacity: 0 }, { opacity: 0.78, duration: 0.09, ease: "power2.out", overwrite: "auto" }, t4 + 2.95);
+      tl.to(".beat-rooms .flash-bar",
+        { opacity: 0, duration: 0.09, ease: "power2.in", overwrite: "auto" }, t4 + 3.04);
+
+      // Room labels
+      tl.set(".beat-rooms .room-label-A", { opacity: 1 }, t4);
+      tl.set(".beat-rooms .room-label-B", { opacity: 0 }, t4);
+      tl.set(".beat-rooms .room-label-C", { opacity: 0 }, t4);
+      tl.set(".beat-rooms .room-label-A", { opacity: 0 }, t4 + 1.5);
+      tl.set(".beat-rooms .room-label-B", { opacity: 1 }, t4 + 1.5);
+      tl.set(".beat-rooms .room-label-B", { opacity: 0 }, t4 + 3.0);
+      tl.set(".beat-rooms .room-label-C", { opacity: 1 }, t4 + 3.0);
+
+      // Caption (sticky across all 3 sub-frames)
+      tl.fromTo(".beat-rooms .cap-rooms",
+        { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out", overwrite: "auto" },
+        t4 + 0.4);
+      tl.to(".beat-rooms .cap-rooms",
+        { opacity: 0, duration: 0.4, ease: "power2.in", overwrite: "auto" }, t4 + 4.1);
+
+      // ---------- Beat 5 — End card (19.0 → 22.0s) ----------
+      const t5 = 19.0;
+
+      tl.fromTo(".beat-end .endcard-tag",
+        { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" },
+        t5);
+      tl.fromTo(".beat-end .endcard-qr",
+        { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" },
+        t5 + 0.15);
+      tl.fromTo(".beat-end .endcard-url",
+        { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
+        t5 + 0.35);
+      tl.fromTo(".beat-end .endcard-cta",
+        { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
+        t5 + 0.55);
+
+      // Aura pulse — child node, finite repeat (rule #5).
+      tl.fromTo(".beat-end .qr-aura",
+        { opacity: 0.55, scale: 0.97 },
+        { opacity: 0.85, scale: 1.04, duration: 0.5, ease: "sine.inOut", repeat: 5, yoyo: true },
+        t5 + 0.6);
+
+      // QR card breath — child img only.
+      tl.fromTo(".beat-end .endcard-qr img",
+        { scale: 0.97 }, { scale: 1.0, duration: 1.2, ease: "power2.out" },
+        t5 + 0.15);
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

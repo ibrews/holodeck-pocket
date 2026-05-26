@@ -1,0 +1,18 @@
+[div] HOLODECK
+[div] POCKET
+[button] Four Seasons Lake Austin
+[button] A Christmas Carol · Stave 1
+[button] Stage Presence · D&D Encounter
+[button] Enter VR
+[h3] Design options
+[label] Time of day
+[option] Noon (clear)
+[option] Golden hour
+[option] Night reception
+[label] Floor layout
+[option] Rounds (banquet)
+[option] Theater rows
+[option] Open mingle
+[strong] Placeholder mode.
+[div] Real venue model loads in the live demo.
+[span] drag to look
