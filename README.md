@@ -110,3 +110,7 @@ The repo is **public** (flipped from private on 2026-04-30 to enable GitHub Page
 Source code: private — internal AgileLens / BPI. Do not redistribute.
 
 All third-party 3D models — see [LICENSES.md](./LICENSES.md) for per-model attribution.
+
+## Support
+
+If you like seeing this kind of thing get built and shared, [donations are always welcome](https://www.alexcoulombepresents.com/support) — they buy hardware, render time, and the freedom to keep giving most of this away.
